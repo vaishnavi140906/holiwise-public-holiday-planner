@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#101124">
+    <title>Holiwise — Your World of Holidays</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-shell">
+        <aside class="sidebar">
+            <a class="brand" href="#">
+                <span class="brand-icon">✳</span>
+                <span>holi<span class="brand-accent">wise</span></span>
+            </a>
+
+            <p class="nav-label">WORKSPACE</p>
+            <a class="nav-item active" href="#overview"><span>◈</span> Overview</a>
+            <a class="nav-item" href="#calendar-section"><span>▦</span> Holiday calendar</a>
+            <a class="nav-item" href="#directory"><span>☷</span> Holiday directory</a>
+            <a class="nav-item" href="#history-section"><span>📚</span> History</a>
+
+            <div class="sidebar-bottom">
+                <div class="sidebar-art">🌎</div>
+                <h3>One world.<br>Many celebrations.</h3>
+                <p>Discover the days that bring people together.</p>
+                <span class="live-indicator"></span> Powered by Nager.Date
+            </div>
+        </aside>
+
+        <main class="main-content" id="overview">
+            <header class="topbar">
+                <div>
+                    <p class="eyebrow">YOUR GLOBAL HOLIDAY COMPANION</p>
+                    <h2>Holiday explorer <span>✦</span></h2>
+                </div>
+                <div class="topbar-tag"><span class="live-indicator"></span> Live holiday data</div>
+            </header>
+
+            <section class="hero">
+                <div class="hero-content">
+                    <span class="hero-chip">✦ YOUR YEAR, BEAUTIFULLY PLANNED</span>
+                    <h1>Make every day<br>a reason to <span>celebrate.</span></h1>
+                    <p>Explore public holidays around the world, discover upcoming celebrations, and make every moment count.</p>
+
+                    <div class="filters">
+                        <label>
+                            <span>🌍 COUNTRY</span>
+                            <select id="countrySelect">
+                                <option value="">Loading countries...</option>
+                            </select>
+                        </label>
+
+                        <label>
+                            <span>📅 YEAR</span>
+                            <select id="yearSelect"></select>
+                        </label>
+
+                        <button id="loadBtn" class="primary-btn">Explore holidays ↗</button>
+                    </div>
+                </div>
+
+                <div class="hero-visual" aria-hidden="true">
+                    <div class="orbit orbit-one"></div>
+                    <div class="orbit orbit-two"></div>
+                    <div class="planet">🌎</div>
+                    <span class="floating-star star-one">✦</span>
+                    <span class="floating-star star-two">✧</span>
+                    <span class="floating-star star-three">✦</span>
+                    <span class="floating-emoji emoji-one">🎉</span>
+                    <span class="floating-emoji emoji-two">🎊</span>
+                    <span class="floating-emoji emoji-three">🎈</span>
+                </div>
+            </section>
+
+            <div id="statusMessage" class="status-message" role="status" aria-live="polite">
+                Loading your holiday experience...
+            </div>
+
+            <!-- HOLIDAY STATISTICS -->
+            <section class="stats-grid" aria-label="Holiday statistics">
+                <article class="stat-card stat-purple">
+                    <div class="stat-top">
+                        <span>Total holidays</span>
+                        <span class="stat-icon">✳</span>
+                    </div>
+                    <div class="stat-number" id="totalHolidays">—</div>
+                    <p>Public holidays this year</p>
+                </article>
+
+                <article class="stat-card stat-blue">
+                    <div class="stat-top">
+                        <span>Nationwide</span>
+                        <span class="stat-icon">🌐</span>
+                    </div>
+                    <div class="stat-number" id="nationwideHolidays">—</div>
+                    <p>Applicable nationwide</p>
+                </article>
+
+                <article class="stat-card stat-pink">
+                    <div class="stat-top">
+                        <span>Active months</span>
+                        <span class="stat-icon">▦</span>
+                    </div>
+                    <div class="stat-number" id="activeMonths">—</div>
+                    <p>Months with holidays</p>
+                </article>
+
+                <article class="stat-card stat-yellow">
+                    <div class="stat-top">
+                        <span>Next holiday</span>
+                        <span class="stat-icon">✦</span>
+                    </div>
+                    <div class="stat-number next-stat" id="nextHoliday">—</div>
+                    <p id="nextHolidayDate">Your next celebration</p>
+                </article>
+            </section>
+
+            <!-- LIVE HOLIDAY COUNTDOWN -->
+            <section class="countdown-card" id="countdownCard">
+                <div class="countdown-content">
+                    <span class="countdown-label">
+                        ✨ YOUR NEXT CELEBRATION
+                    </span>
+
+                    <h2 id="countdownHolidayName">
+                        Finding your next holiday...
+                    </h2>
+
+                    <p id="countdownHolidayDate">
+                        Your next celebration is getting closer!
+                    </p>
+
+                    <div class="countdown-timer">
+                        <div class="countdown-unit">
+                            <span id="countdownDays">00</span>
+                            <small>Days</small>
+                        </div>
+
+                        <div class="countdown-unit">
+                            <span id="countdownHours">00</span>
+                            <small>Hours</small>
+                        </div>
+
+                        <div class="countdown-unit">
+                            <span id="countdownMinutes">00</span>
+                            <small>Minutes</small>
+                        </div>
+
+                        <div class="countdown-unit">
+                            <span id="countdownSeconds">00</span>
+                            <small>Seconds</small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="countdown-decoration">🎉</div>
+            </section>
+
+            <!-- HOLIDAY CALENDAR -->
+            <section class="content-panel" id="calendar-section">
+                <div class="section-heading">
+                    <div>
+                        <p class="eyebrow">PLAN SOMETHING SPECIAL</p>
+                        <h2>Your holiday calendar <span class="heading-spark">✦</span></h2>
+                        <p class="section-description">A colourful look at the year ahead.</p>
+                    </div>
+
+                    <label class="month-filter">
+                        <span>VIEW MONTH</span>
+                        <select id="monthSelect">
+                            <option value="all">All months</option>
+                            <option value="0">January</option>
+                            <option value="1">February</option>
+                            <option value="2">March</option>
+                            <option value="3">April</option>
+                            <option value="4">May</option>
+                            <option value="5">June</option>
+                            <option value="6">July</option>
+                            <option value="7">August</option>
+                            <option value="8">September</option>
+                            <option value="9">October</option>
+                            <option value="10">November</option>
+                            <option value="11">December</option>
+                        </select>
+                    </label>
+                </div>
+
+                <div class="calendar-legend">
+                    <span><i class="legend-dot dot-purple"></i> Public holiday</span>
+                    <span><i class="legend-dot dot-pink"></i> Upcoming</span>
+                    <span class="calendar-tip">Select a highlighted date to explore ↓</span>
+                </div>
+
+                <div id="calendarGrid" class="calendar-grid"></div>
+            </section>
+
+            <!-- HOLIDAY DIRECTORY -->
+            <section class="content-panel directory-panel" id="directory">
+                <div class="section-heading directory-heading">
+                    <div>
+                        <p class="eyebrow">EVERY CELEBRATION, IN ONE PLACE</p>
+                        <h2>The holiday directory <span class="heading-spark">✦</span></h2>
+                        <p class="section-description" id="directorySubtitle">
+                            Find the holidays that matter to you.
+                        </p>
+                    </div>
+
+                    <button id="exportBtn" class="secondary-btn">↓ Export CSV</button>
+                </div>
+
+                <div class="search-row">
+                    <div class="search-box">
+                        <span>⌕</span>
+                        <input
+                            id="searchInput"
+                            type="search"
+                            placeholder="Search holidays by name or date..."
+                            aria-label="Search holidays"
+                        >
+                    </div>
+
+                    <span id="resultCount" class="result-count">0 holidays</span>
+                </div>
+
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>DATE</th>
+                                <th>HOLIDAY</th>
+                                <th>LOCAL NAME</th>
+                                <th>OBSERVANCE</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="holidayTableBody">
+                            <tr>
+                                <td colspan="4" class="empty-state">
+                                    Your holidays will appear here.
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div id="emptySearch" class="empty-search" hidden>
+                    No holidays match your search. Try another name. 🔎
+                </div>
+            </section>
+
+            <!-- NEW: HOLIDAY HISTORY -->
+            <section class="content-panel history-panel" id="history-section">
+                <div class="section-heading">
+                    <div>
+                        <p class="eyebrow">YOUR HOLIWISE JOURNEY</p>
+                        <h2>Explore History <span class="heading-spark">✦</span></h2>
+                        <p class="section-description">
+                            Revisit your searches and discover the stories behind celebrations.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- HISTORY TABS -->
+                <div class="history-tabs">
+                    <button
+                        type="button"
+                        class="history-tab active"
+                        data-history-tab="search"
+                        aria-controls="search-history-content"
+                    >
+                        🔍 Search History
+                    </button>
+
+                    <button
+                        type="button"
+                        class="history-tab"
+                        data-history-tab="celebrations"
+                        aria-controls="celebration-history-content"
+                    >
+                        🎉 Celebration History
+                    </button>
+                </div>
+
+                <!-- SEARCH HISTORY -->
+                <div class="history-content" id="search-history-content">
+                    <div class="history-toolbar">
+                        <div>
+                            <h3>Your Recent Searches</h3>
+                            <p>Your searches are saved in this browser.</p>
+                        </div>
+
+                        <button
+                            type="button"
+                            class="history-clear-btn"
+                            id="clearHistoryBtn"
+                        >
+                            🗑️ Clear History
+                        </button>
+                    </div>
+
+                    <div
+                        id="searchHistoryList"
+                        class="search-history-list"
+                    ></div>
+                </div>
+
+                
+                <!-- CELEBRATION HISTORY -->
+<div
+    class="history-content"
+    id="celebration-history-content"
+    hidden
+>
+    <div class="celebration-filters">
+
+        <!-- Search festivals -->
+        <div class="history-search">
+            <input
+                type="search"
+                id="celebrationSearch"
+                placeholder="Search festivals and countries..."
+                aria-label="Search celebrations"
+            >
+        </div>
+
+        <!-- Filter by country -->
+        <div class="history-country-filter">
+            <select
+                id="celebrationCountryFilter"
+                aria-label="Filter celebrations by country"
+            >
+                <option value="all">🌍 All Countries</option>
+                <option value="India">🇮🇳 India</option>
+                <option value="United States">🇺🇸 United States</option>
+                <option value="United Kingdom">🇬🇧 United Kingdom</option>
+                <option value="Japan">🇯🇵 Japan</option>
+                <option value="China">🇨🇳 China</option>
+                <option value="France">🇫🇷 France</option>
+                <option value="Brazil">🇧🇷 Brazil</option>
+                <option value="Mexico">🇲🇽 Mexico</option>
+                <option value="Australia">🇦🇺 Australia</option>
+                <option value="Thailand">🇹🇭 Thailand</option>
+                <option value="Worldwide">🌐 Worldwide</option>
+            </select>
+        </div>
+
+    </div>
+
+    <!-- Festival cards appear here -->
+    <div
+        id="celebrationHistoryList"
+        class="celebration-history-grid"
+    ></div>
+</div>
+            </section>
+
+            <!-- FOOTER -->
+            <footer class="footer">
+                <a class="brand footer-brand" href="#">
+                    <span class="brand-icon">✳</span>
+                    holi<span class="brand-accent">wise</span>
+                </a>
+
+                <p>Made for curious minds and meaningful moments. ✨</p>
+
+                <p class="attribution">
+                    Holiday data provided by
+                    <a
+                        href="https://date.nager.at/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >Nager.Date</a>.
+                </p>
+            </footer>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
